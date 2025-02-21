@@ -1,0 +1,7 @@
+resources:
+- grafana.yml
+configMapGenerator:
+- name: default-dashboards
+  files:
+  - ./dashboard-cluster.json
+  - ./dashboard-django.json
