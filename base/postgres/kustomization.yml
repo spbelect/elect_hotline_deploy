@@ -1,0 +1,6 @@
+kind: Component
+
+resources:
+- postgres.yml
+- postgres-config-map.yml
+- postgres-service.yml

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: ufo-ns
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17.2-alpine3.21
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              # hostPort: 55432
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/postgresql/data
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+
+            # create password with
+            # read -p "password: " password && kubectl create secret generic postgres-secrets --namespace "ufo-ns" --from-literal POSTGRES_PASSWORD="$password" --from-literal DATABASE_URL="postgresql://pguser:$password@postgres:5432/pgdb"
+            - secretRef:
+                name: postgres-secrets
+
+          resources:
+              requests:
+                cpu: 200m
+                memory: 300Mi
+              limits:
+                cpu: 200m
+                memory: 300Mi
+      restartPolicy: Always
+
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # PV is a cluster-wide resource, meaning they do not belong to any specific namespace
+  name: postgres-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200M  # total capacity for this persistent volume
+  accessModes:
+    - ReadWriteOnce
+  hostPath:  # where pesistent volume is created on the kubernetes node (needs to be /data for minikube)
+    path: "/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim  # claim a portion of persistent volume
+metadata:
+  namespace: ufo-ns
+  name: postgres-pvc
+  labels:
+    app: postgres-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce  # mount as read-write by a single node
+  resources:
+    requests:
+      storage: 100M  # storage capacity cons

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: ufo-ns
+  name: postgres-config
+  labels:
+    app: postgres-config
+data:
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: pgdb
+  POSTGRES_USER: pguser
+
+  # create password with
+  # read -p "password: " password && kubectl create secret generic postgres-secrets --namespace "ufo-ns" --from-literal POSTGRES_PASSWORD="$password" --from-literal DATABASE_URL="postgresql://pguser:$password@postgres:5432/pgdb"
