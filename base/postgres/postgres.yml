@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
-  namespace: ufo-ns
   labels:
     app: postgres
 spec:
@@ -69,7 +68,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim  # claim a portion of persistent volume
 metadata:
-  namespace: ufo-ns
   name: postgres-pvc
   labels:
     app: postgres-pvc
