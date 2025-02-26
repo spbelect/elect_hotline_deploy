@@ -1,0 +1,6 @@
+# resources:
+#   - metrics/grafana/
+
+components:
+  - ../base/metrics/grafana/
+  - ../base/postgres/
