@@ -1,5 +1,5 @@
-# resources:
-#   - metrics/grafana/
+resources:
+  - ../base/
 
 components:
   - ../base/metrics/grafana/

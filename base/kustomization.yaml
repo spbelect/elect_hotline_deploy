@@ -1,1 +1,2 @@
-resources: [ metrics/grafana/ ]
+resources:
+  - argocd-httproute.yml
