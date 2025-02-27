@@ -1,0 +1,40 @@
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: letsencrypt
+# spec:
+#   acme:
+#     server: https://acme-v02.api.letsencrypt.org/directory
+#     # Email address used for ACME registration
+#     email: someuniquename@gmail.com
+#     # Name of a secret used to store the ACME account private key
+#     privateKeySecretRef:
+#       name: letsencrypt-prod
+#     # Enable the HTTP-01 challenge provider
+#     solvers:
+#       - http01:
+#           gatewayHTTPRoute:
+#             parentRefs:
+#               - name: ufo-gateway
+#                 kind: Gateway
+# ---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: issuer-selfsigned
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: self-cert
+spec:
+  # dnsNames:
+  #   - vybory.live
+  issuerRef:
+    name: issuer-selfsigned
+
+  # Put certificate to the named secret. This secret must be referenced by Gateway
+  # ufo-gateway to test with self-issued Certificate
+  secretName: self-cert-secret

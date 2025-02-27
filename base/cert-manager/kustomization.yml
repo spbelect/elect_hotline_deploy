@@ -1,0 +1,5 @@
+kind: Component
+
+resources:
+- https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.yaml
+- cert.yml
