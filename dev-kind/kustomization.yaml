@@ -8,3 +8,4 @@ components:
 
 patches:
   - path: nodeport.yml
+  - path: httproute.yml

@@ -161,8 +161,8 @@ metadata:
 spec:
   parentRefs:
   - name: ufo-gateway
-  hostnames:
-  - "grafana.vybory.live"
+  # hostnames:
+  # - "grafana.vybory.live"
   rules:
   - matches:
     - path:
