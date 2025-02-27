@@ -1,0 +1,8 @@
+project: default
+source:
+  repoURL: https://github.com/spbelect/elect_hotline_deploy.git
+  path: dev-kube
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: ufo-ns
