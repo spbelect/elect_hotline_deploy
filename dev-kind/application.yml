@@ -1,3 +1,5 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 project: default
 source:
   repoURL: https://github.com/spbelect/elect_hotline_deploy.git
