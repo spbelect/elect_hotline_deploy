@@ -1,0 +1,5 @@
+kind: Component
+
+resources:
+- https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.5.1/deploy/crds.yaml
+- https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.5.1/deploy/nodeport/deploy.yaml
