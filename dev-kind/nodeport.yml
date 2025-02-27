@@ -13,3 +13,21 @@ spec:
       targetPort: http-grafana
       nodePort: 30008
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-gateway
+  namespace: nginx-gateway
+spec:
+  # externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30080
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 443
+    nodePort: 30443
