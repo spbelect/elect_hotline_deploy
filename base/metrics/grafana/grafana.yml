@@ -145,18 +145,14 @@ kind: Service
 metadata:
   name: grafana
 spec:
+  type: ClusterIP  # Can be overriden to NodePort in overlays
+  sessionAffinity: None
+  selector:
+    app: grafana
   ports:
     - port: 3000
       protocol: TCP
       targetPort: http-grafana
-
-      # Will be accessible at node ip which can be retieved with
-      # > kubectl get node -o wide
-      nodePort: 30008
-  selector:
-    app: grafana
-  sessionAffinity: None
-  type: NodePort
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

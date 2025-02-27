@@ -1,0 +1,15 @@
+# NodePort services will be accessible at node ip which can be retieved with
+# > kubectl get node -o wide
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+      nodePort: 30008
+---

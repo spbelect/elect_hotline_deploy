@@ -4,3 +4,7 @@
 components:
   - ../base/metrics/grafana/
   - ../base/postgres/
+  - ../base/gateway-api/
+
+patches:
+  - path: nodeport.yml
