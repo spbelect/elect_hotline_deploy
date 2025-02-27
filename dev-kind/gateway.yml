@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ufo-gateway
+spec:
+  listeners:
+  - protocol: HTTP
+    name: ufo-http
+    port: 80
+
+  - protocol: HTTPS
+    name: ufo-https
+    port: 443
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: self-cert-secret
