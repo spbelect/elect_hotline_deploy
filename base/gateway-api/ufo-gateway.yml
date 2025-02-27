@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ufo-gateway
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - protocol: HTTP
+    name: ufo-http
+    port: 80
+  - protocol: HTTPS
+    name: ufo-https
+    port: 443
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        # name: self-cert-secret
+        # name: lets-staging-cert-secret
+        name: lets-cert-secret
