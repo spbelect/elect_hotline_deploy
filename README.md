@@ -11,6 +11,7 @@ Checks can be preformed before the web server starts: `python manage.py check --
 
 ## Kubernetes
 
+
 If you have kubeconfig for your cluster, enable it with
 `export KUBECONFIG=./third-space-kubeconfig.yml`
 
@@ -22,6 +23,19 @@ To make the context always available, add to ~/.bashrc:
 Recommended to install kubie for context and namespace management: `zypper in kubie`
 
 To allow kubie discover your kubeconfig file, copy it to `~/.kube` directory.
+
+
+### ArgoCD
+
+```
+zypper in argocd-cli
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.2/manifests/install.yaml
+```
+
+Print admin password: `argocd admin initial-password -n argocd`
+
+Start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
 
 
 ### Create namespace
@@ -151,19 +165,6 @@ Check that ServiceMonitor is up and active. Start port forwarding and go to http
 #### Grafana
 
 Install grafana `kubectl apply -k kube/metrics/grafana/`
-
-
-#### ArgoCD
-
-```
-zypper in argocd-cli
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.2/manifests/install.yaml
-```
-
-Print admin password: `argocd admin initial-password -n argocd`
-
-Start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
 
 
 ### Utils
