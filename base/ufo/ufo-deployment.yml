@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ufo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ufo-app
+  template:
+    metadata:
+      labels:
+        app: ufo-app
+    spec:
+      hostNetwork: false
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: ufo-app
+        image: fak3/ufo:0.6
+        ports:
+        - containerPort: 8000
+        envFrom:
+          - configMapRef:
+              name: ufo-config
+          - secretRef:
+              name: postgres-secrets
+          - secretRef:
+              name: ufo-secrets
+          - secretRef:
+              name: ufo-secret-key
+          - secretRef:
+              name: sendgrid-secrets
+              optional: true

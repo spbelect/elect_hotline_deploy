@@ -1,0 +1,17 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ufo-httproute
+spec:
+  parentRefs:
+  - name: ufo-gateway
+  # hostnames:
+  # - "vybory.live"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: ufo-service
+      port: 80

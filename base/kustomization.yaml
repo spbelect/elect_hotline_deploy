@@ -1,2 +1,7 @@
 resources:
   - argocd-httproute.yml
+
+  - ufo/ufo-deployment.yml
+  - ufo/ufo-migrate-job.yml
+  - ufo/ufo-httproute.yml
+  - ufo/ufo-service.yml

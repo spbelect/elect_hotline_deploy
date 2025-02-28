@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ufo-migrations
+spec:
+  activeDeadlineSeconds: 60
+  ttlSecondsAfterFinished: 100
+  backoffLimit: 15
+
+  template:
+    spec:
+      containers:
+      - name: ufo-migrations-container
+        image: fak3/ufo:0.6
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "pgwait && ./manage.py migrate --skip-checks"]
+
+        envFrom:
+          - configMapRef:
+              name: ufo-config
+          - secretRef:
+              name: postgres-secrets
+          - secretRef:
+              name: ufo-secrets
+          - secretRef:
+              name: ufo-secret-key
+          - secretRef:
+              name: sendgrid-secrets
+              optional: true
+
+
+
+      # restartPolicy: Never
+      restartPolicy: OnFailure
