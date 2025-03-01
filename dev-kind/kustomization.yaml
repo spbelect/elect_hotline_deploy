@@ -20,3 +20,14 @@ patches:
       spec:
         dnsNames:
           - kind
+
+  # debug logging for gateway
+  - patch: |-
+      apiVersion: gateway.nginx.org/v1alpha1
+      kind: NginxGateway
+      metadata:
+        name: nginx-gateway-config
+        namespace: nginx-gateway
+      spec:
+        logging:
+          level: debug
