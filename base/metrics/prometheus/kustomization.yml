@@ -1,0 +1,8 @@
+kind: Component
+
+resources:
+- https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.80.0/bundle.yaml
+
+
+patches:
+  - path: deployment.yml

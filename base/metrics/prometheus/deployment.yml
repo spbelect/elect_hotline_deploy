@@ -1,0 +1,50 @@
+# This manifest is copied from
+# https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.80.0/bundle.yaml
+#
+# Additionally it increases Prometheus config-reloader cpu resource limit to avoid throttling.
+#
+# Apply this after installing the prometheus-operator bundle to override default deployment.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-operator
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - args:
+        - --kubelet-service=kube-system/kubelet
+        - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.80.0
+        - --kubelet-endpoints=true
+        - --kubelet-endpointslice=false
+
+        # Prometheus config-reloader has only 10m cpu by default and being constantly throttled,
+        # which causes prometheus alert:
+        # https://github.com/prometheus-operator/prometheus-operator/issues/5446#issuecomment-1596664300
+        # The cpu limit must be changed to at least 30m.
+        - --config-reloader-cpu-limit=30m
+
+        env:
+        - name: GOGC
+          value: "30"
+        image: quay.io/prometheus-operator/prometheus-operator:v0.80.0
+        name: prometheus-operator
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true

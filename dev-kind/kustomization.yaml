@@ -3,6 +3,7 @@ resources:
 
 components:
   - ../base/metrics/grafana/
+  - ../base/metrics/prometheus/
   - ../base/postgres/
   - ../base/gateway-api/
   - ../base/cert-manager/
