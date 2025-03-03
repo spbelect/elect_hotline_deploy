@@ -16,7 +16,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: ufo-app
-        image: fak3/ufo:0.6
+        image: ufo-image
         ports:
         - containerPort: 8000
         envFrom:

@@ -5,3 +5,8 @@ resources:
   - ufo/ufo-migrate-job.yml
   - ufo/ufo-httproute.yml
   - ufo/ufo-service.yml
+
+images:
+ - name: ufo-image
+   newName: registry.hub.docker.com/fak3/ufo
+   newTag: "0.6"

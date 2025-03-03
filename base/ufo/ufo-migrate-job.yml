@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ufo-migrations-container
-        image: fak3/ufo:0.6
+        image: ufo-image
         imagePullPolicy: IfNotPresent
         command: ["sh", "-c", "pgwait && ./manage.py migrate --skip-checks"]
 
