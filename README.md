@@ -33,9 +33,11 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.2/manifests/install.yaml
 ```
 
-Print admin password: `argocd admin initial-password -n argocd`
+To access it, expose nodeport service: `kubectl apply -f argo-nodeport-service.yml`. Alternatively you can start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
 
-Start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
+Print admin password: `argocd admin initial-password -n argocd`. Copy this password to clipboard.
+
+To use `argocd` cli, login with username `admin` and the password printed above: `argocd login kind:30009`
 
 
 ### Create namespace
