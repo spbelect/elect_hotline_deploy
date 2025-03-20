@@ -10,8 +10,17 @@ components:
 
 patches:
   - path: nodeport.yml
-  - path: httproute.yml
   - path: gateway.yml
+
+  # Set HTTPRoute hostnames to {service}.kind to access on locallhost.
+  # Add to your /etc/hosts:
+  # 172.20.0.2 argocd.kind
+  # 172.20.0.2 prometheus.kind
+  # 172.20.0.2 grafana.kind
+  # 172.20.0.2 ufo.kind
+  # Where 172.20.0.2 is an ip of your local kind node which can be retrieved via
+  # > kubectl get node -o wide
+  - path: httproute.yml
 
   - patch: |-
       apiVersion: cert-manager.io/v1
