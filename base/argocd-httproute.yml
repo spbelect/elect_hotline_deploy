@@ -1,6 +1,11 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
+  annotations:
+    # Exclude HTTPRoute from aserver-side apply.
+    # See bug https://github.com/argoproj/argo-cd/issues/22151
+    argocd.argoproj.io/sync-options: ServerSideApply=false
+
   name: argocd-httproute
 spec:
   parentRefs:
