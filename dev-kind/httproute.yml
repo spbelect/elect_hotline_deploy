@@ -1,11 +1,18 @@
 # Set HTTPRoute hostnames to {service}.kind to access on locallhost.
+#
+# Services will be accessible via 30443 https or 30080 ports,
+# as defined in dev-kind/nodeport.yml in nginx-gateway Service.
+# For example: https://grafana.kind:30443/
+#
 # Add to your /etc/hosts:
 # 172.20.0.2 argocd.kind
 # 172.20.0.2 prometheus.kind
 # 172.20.0.2 grafana.kind
 # 172.20.0.2 ufo.kind
+#
 # Where 172.20.0.2 is an ip of your local kind node which can be retrieved via
 # > kubectl get node -o wide
+
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

@@ -18,8 +18,10 @@ patches:
   # 172.20.0.2 prometheus.kind
   # 172.20.0.2 grafana.kind
   # 172.20.0.2 ufo.kind
+  # 172.20.0.2 kind
   # Where 172.20.0.2 is an ip of your local kind node which can be retrieved via
   # > kubectl get node -o wide
+  # TODO: argocd returns error 500.
   - path: httproute.yml
 
   - patch: |-
