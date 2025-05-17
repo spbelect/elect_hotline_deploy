@@ -1,3 +1,7 @@
+# ArgoCD application.
+# Create it with command:
+# > argocd app create --file dev-kind/application.yml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 
