@@ -22,4 +22,4 @@ spec:
   syncPolicy:
     syncOptions:
     # Some prometheus resources are too big for client-side. Use server-side.
-    - ServerSideApply=false
+    - ServerSideApply=true
