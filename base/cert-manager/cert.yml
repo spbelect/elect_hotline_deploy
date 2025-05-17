@@ -23,7 +23,8 @@ kind: Issuer
 metadata:
   name: issuer-selfsigned
   annotations:
-    argocd.argoproj.io/sync-wave: "1"  # defalut wave is 0
+    # Will run in wave 1, after "Wave 0": create cert-manager
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   selfSigned: {}
 ---
@@ -32,7 +33,10 @@ kind: Certificate
 metadata:
   name: self-cert
   annotations:
-    argocd.argoproj.io/sync-wave: "1"  # defalut wave is 0
+    # Will run in wave 2:
+    # Wave 0: create cert-manager
+    # Wave 1: crate Issuer
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   # dnsNames:
   #   - vybory.live
