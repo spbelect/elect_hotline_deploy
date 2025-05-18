@@ -29,6 +29,9 @@ spec:
     - ServerSideApply=true
 
 
+    # TODO: Currently retry is needed for the initial app sync after creation. Without
+    # retrying, initial sync always fails with error:
+    # cert-manager-webhook.cert-manager.svc:443/validate tls failed to verify certificate: "x509: certificate signed by unknown authority"
     - Retry=true
     retry:
       limit: 5  # Maximum number of retries
