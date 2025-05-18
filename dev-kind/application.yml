@@ -27,3 +27,12 @@ spec:
     syncOptions:
     # Some prometheus resources are too big for client-side. Use server-side.
     - ServerSideApply=true
+
+
+    - Retry=true
+    retry:
+      limit: 5  # Maximum number of retries
+      backoff:
+        duration: 5s  # Initial retry interval
+        factor: 2  # Multiplication factor for the backoff
+        maxDuration: 1m  # Maximum retry interval
