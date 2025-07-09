@@ -30,7 +30,7 @@ To allow kubie discover your kubeconfig file, copy it to `~/.kube` directory.
 ```
 zypper in argocd-cli
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.2/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.6/manifests/install.yaml
 ```
 
 To access it, expose nodeport service: `kubectl apply -f argo-nodeport-service.yml`. Alternatively you can start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
