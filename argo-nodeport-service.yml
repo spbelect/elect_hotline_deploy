@@ -16,7 +16,7 @@ spec:
     protocol: TCP
     targetPort: 8080
 
-    # Will be accessible at node ip which can be retieved with
+    # Will be accessible at node ip which can be retrieved with
     # > kubectl get node -o wide
     nodePort: 30009
 
