@@ -1,0 +1,38 @@
+# Set HTTPRoute hostnames to {service}.k3d to access on locallhost.
+#
+# Services will be accessible via 30443 https or 30080 ports,
+# as defined in dev-k3d/nodeport.yml in nginx-gateway Service.
+# For example: https://grafana.k3d:30443/
+#
+# Add to your /etc/hosts:
+# 172.20.0.2 argocd.k3d
+# 172.20.0.2 prometheus.k3d
+# 172.20.0.2 grafana.k3d
+# 172.20.0.2 ufo.k3d
+#
+# Where 172.20.0.2 is an ip of your local k3d node which can be retrieved via
+# > kubectl get node -o wide
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana-httproute
+spec:
+  hostnames:
+  - "grafana.k3d"
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-httproute
+spec:
+  hostnames:
+  - "argocd.k3d"
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ufo-httproute
+spec:
+  hostnames:
+  - "ufo.k3d"

@@ -1,0 +1,45 @@
+resources:
+  - ../base/
+
+components:
+  - ../base/metrics/grafana/
+  - ../base/metrics/prometheus/
+  - ../base/postgres/
+  - ../base/gateway-api/
+  - ../base/cert-manager/
+
+patches:
+  - path: nodeport.yml
+  - path: gateway.yml
+
+  # Set HTTPRoute hostnames to {service}.k3d to access on locallhost.
+  # Add to your /etc/hosts:
+  # 172.20.0.2 argocd.k3d
+  # 172.20.0.2 prometheus.k3d
+  # 172.20.0.2 grafana.k3d
+  # 172.20.0.2 ufo.k3d
+  # 172.20.0.2 k3d
+  # Where 172.20.0.2 is an ip of your local k3d node which can be retrieved via
+  # > kubectl get node -o wide
+  # TODO: argocd returns error 500.
+  - path: httproute.yml
+
+  - patch: |-
+      apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name: self-cert
+      spec:
+        dnsNames:
+          - k3d
+
+  # debug logging for gateway
+  - patch: |-
+      apiVersion: gateway.nginx.org/v1alpha1
+      kind: NginxGateway
+      metadata:
+        name: nginx-gateway-config
+        namespace: nginx-gateway
+      spec:
+        logging:
+          level: debug

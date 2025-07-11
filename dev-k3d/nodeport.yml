@@ -1,0 +1,53 @@
+# NodePort services will be accessible at node ip which can be retieved with
+# > kubectl get node -o wide
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ufo-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8000
+      nodePort: 30007
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+      nodePort: 30008
+---
+# Nginx gateway service allows to access all other services at
+# http/https ports 30000 and 30001.
+
+# TODO: argocd throws error 500 when accesed via nginx gateway.
+# To access it, expose nodeport service: `kubectl apply -f argo-nodeport-service.yml`. Alternatively you can start port forwarding: `kubectl port-forward service/argocd-server -n argocd 8080:443`
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-gateway
+  namespace: nginx-gateway
+spec:
+  # externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30000
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 443
+    nodePort: 30001
+---

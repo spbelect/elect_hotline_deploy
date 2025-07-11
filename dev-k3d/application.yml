@@ -1,0 +1,41 @@
+# ArgoCD application.
+# Create it with command:
+# > argocd app create --file dev-kind/application.yml
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: dev-k3d-ufo
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/spbelect/elect_hotline_deploy.git
+    path: dev-k3d
+    targetRevision: HEAD
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ufo-ns
+
+  syncPolicy:
+    syncOptions:
+    # Some prometheus resources are too big for client-side. Use server-side.
+    - ServerSideApply=true
+
+
+    # TODO: Currently retry is needed for the initial app sync after creation. Without
+    # retrying, initial sync always fails with error:
+    # cert-manager-webhook.cert-manager.svc:443/validate tls failed to verify certificate: "x509: certificate signed by unknown authority"
+    - Retry=true
+    retry:
+      limit: 5  # Maximum number of retries
+      backoff:
+        duration: 5s  # Initial retry interval
+        factor: 2  # Multiplication factor for the backoff
+        maxDuration: 1m  # Maximum retry interval
