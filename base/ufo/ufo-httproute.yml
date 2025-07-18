@@ -10,6 +10,7 @@ metadata:
     # Wave 0: create cert-manager
     # Wave 1: crate Issuer
     argocd.argoproj.io/sync-wave: "2"
+spec:
   # hostnames:
   # - "vybory.live"
   rules:
