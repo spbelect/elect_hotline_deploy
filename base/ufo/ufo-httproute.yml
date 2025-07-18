@@ -11,6 +11,8 @@ metadata:
     # Wave 1: crate Issuer
     argocd.argoproj.io/sync-wave: "2"
 spec:
+  parentRefs:
+  - name: ufo-gateway
   # hostnames:
   # - "vybory.live"
   rules:
