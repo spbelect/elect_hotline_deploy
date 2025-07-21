@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-role
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - nodes/metrics
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get"]
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs:
+  - /metrics
+  - /metrics/slis
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-role
+subjects:
+- kind: ServiceAccount
+  name: prometheus-sa
+  namespace: ufo-ns
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+# For each Prometheus resource, the Operator deploys one or several StatefulSet objects in the same namespace.
+#
+metadata:
+  name: ufo-prometheus
+spec:
+  serviceAccountName: prometheus-sa
+
+  # The ServiceMonitor custom resource definition (CRD) defines how Prometheus
+  # and PrometheusAgent can scrape metrics from a group of services
+  serviceMonitorNamespaceSelector: {}  # auto discover accross all namespaces
+  #   matchLabels:
+  #     name: ufo
+  serviceMonitorSelector: {}  # auto discover all service monitors
+  #   matchLabels:
+  #     env: staging
+
+  # The PodMonitor custom resource definition (CRD) defines how Prometheus
+  # and PrometheusAgent can scrape metrics from a group of pods
+  podMonitorNamespaceSelector: {}   # auto discover accross all namespaces
+  podMonitorSelector: {}  # auto discover all pod monitors
+
+  # The PrometheusRule custom resource definition (CRD) defines alerting and
+  # recording rules to be evaluated by Prometheus or ThanosRuler objects.
+  ruleNamespaceSelector: {}  # auto discover accross all namespaces
+  ruleSelector: {}  # auto discover all rules
+
+  resources:
+    limits:
+      cpu: 300m
+      memory: 600Mi
+    requests:
+      memory: 300Mi
+      cpu: 40m
+
+  enableAdminAPI: true

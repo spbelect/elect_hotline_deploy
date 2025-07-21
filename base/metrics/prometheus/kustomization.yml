@@ -1,8 +1,12 @@
 kind: Component
 
 resources:
+# Prometheus Operator
 - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.80.0/bundle.yaml
-
+# Prometheus instance
+- ufo-prometheus.yml
 
 patches:
+  # Patch Prometheus Operator to adjust resource limits, see
+  # https://github.com/prometheus-operator/prometheus-operator/issues/5446#issuecomment-1596664300
   - path: patch-prom-operator-deployment.yml
