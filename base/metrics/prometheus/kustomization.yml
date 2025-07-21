@@ -5,4 +5,4 @@ resources:
 
 
 patches:
-  - path: prom-operator-deployment.yml
+  - path: patch-prom-operator-deployment.yml
