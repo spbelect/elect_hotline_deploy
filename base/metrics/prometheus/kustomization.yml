@@ -1,10 +1,17 @@
 kind: Component
 
 resources:
-# Prometheus Operator
+# Prometheus Operator, allows to manage Prometheus with CRDs.
 - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.80.0/bundle.yaml
+
 # Prometheus instance
 - ufo-prometheus.yml
+
+# This ServiceMonitor CRD tells prometheus to monitor kubernetes apiserver.
+- kube-sys/kube-apiserver-servicemon.yml
+
+# This ServiceMonitor CRD tells prometheus to monitor kubelet and cadvisor.
+- kube-sys/kubelet-servicemon.yml
 
 patches:
   # Patch Prometheus Operator to adjust resource limits, see
