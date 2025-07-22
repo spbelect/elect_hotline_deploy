@@ -114,9 +114,12 @@ spec:
               port: 3000
             timeoutSeconds: 1
           resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
             requests:
-              # cpu: 250m
-              memory: 350Mi
+              memory: 200Mi
+              cpu: 40m
           volumeMounts:
             - name: grafana-volume-mount
               mountPath: /var/lib/grafana
