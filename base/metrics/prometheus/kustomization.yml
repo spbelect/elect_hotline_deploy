@@ -13,6 +13,10 @@ resources:
 # This ServiceMonitor CRD tells prometheus to monitor kubelet and cadvisor.
 - kube-sys/kubelet-servicemon.yml
 
+# ServiceMonitor and DaemonSet for node exporter.
+- kube-sys/node-exporter.yml
+
+
 patches:
   # Patch Prometheus Operator to adjust resource limits, see
   # https://github.com/prometheus-operator/prometheus-operator/issues/5446#issuecomment-1596664300
